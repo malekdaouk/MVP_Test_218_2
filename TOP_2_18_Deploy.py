@@ -466,7 +466,7 @@ style_df.loc[(style_df["detailed_security_type"]=="stock")&(style_df["equity_sty
 style_df.loc[(style_df["detailed_security_type"]=="stock")&(style_df["equity_style"]=="Small Cap/Value"),  "equity_stylebox_small_cap_value_exposure"]=1.0
 
 # sanity check: exposures should sum to 1 for stocks (0 for non-stocks)
-style_df["style_exposure_sanity"] = style_df[style_cols].sum(axis=1)
+#style_df["style_exposure_sanity"] = style_df[style_cols].sum(axis=1)
 
 # dollar exposure = exposure * Market Value
 
@@ -482,8 +482,8 @@ style_df["small_cap_blend_market_value"]  = style_df["equity_stylebox_small_cap_
 style_df["small_cap_growth_market_value"] = style_df["equity_stylebox_small_cap_growth_exposure"] * style_df["Market Value"]
 style_df["small_cap_value_market_value"]  = style_df["equity_stylebox_small_cap_value_exposure"]  * style_df["Market Value"]
 
-style_df["style_market_value_sanity_sum"] = style_df[["large_cap_blend_market_value","large_cap_growth_market_value","large_cap_value_market_value","mid_cap_blend_market_value","mid_cap_growth_market_value","mid_cap_value_market_value","small_cap_blend_market_value","small_cap_growth_market_value","small_cap_value_market_value"]].sum(axis=1)
-style_df["style_market_value_sanity"] = (style_df["style_market_value_sanity_sum"] - style_df["Market Value"]).round()
+#style_df["style_market_value_sanity_sum"] = style_df[["large_cap_blend_market_value","large_cap_growth_market_value","large_cap_value_market_value","mid_cap_blend_market_value","mid_cap_growth_market_value","mid_cap_value_market_value","small_cap_blend_market_value","small_cap_growth_market_value","small_cap_value_market_value"]].sum(axis=1)
+#style_df["style_market_value_sanity"] = (style_df["style_market_value_sanity_sum"] - style_df["Market Value"]).round()
 
 
 
@@ -501,9 +501,9 @@ small_cap_value_percentage  = style_df["small_cap_value_market_value"].sum()  / 
 
 
 # sanity check → should be ~1.0
-sanity_check = (large_cap_blend_percentage +large_cap_growth_percentage +large_cap_value_percentage +mid_cap_blend_percentage +mid_cap_growth_percentage +mid_cap_value_percentage +small_cap_blend_percentage +small_cap_growth_percentage +small_cap_value_percentage)
+#sanity_check = (large_cap_blend_percentage +large_cap_growth_percentage +large_cap_value_percentage +mid_cap_blend_percentage +mid_cap_growth_percentage +mid_cap_value_percentage +small_cap_blend_percentage +small_cap_growth_percentage +small_cap_value_percentage)
 
-print("Style weight total:", sanity_check)
+#print("Style weight total:", sanity_check)
 
 
 
