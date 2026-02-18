@@ -1243,21 +1243,47 @@ if not CLOUD_MODE:
                 max_width = max(max_width, cell_width)
             
             table.columns[col_idx].width = max_width
+
+
+
+
+# =========================================================
+# FINAL REPORT GENERATION (ONLY PLACE WHERE PPT IS CREATED)
+# =========================================================
+
+OUT_PPTX = "test_report.pptx"
+
+if st.session_state.run_report and not st.session_state.report_ready:
+
+    st.write("Generating report...")
+
+    report = Presentation()
+
+    paste_df_to_slide(report, "Observations/TaxCostRatio.pptx", tax_cost_ratio, 0.2, 2.6)
+    paste_df_to_slide(report, "Observations/ExpenseRatio.pptx", high_expense_ratio, 0.2, 2.5)
+    paste_df_to_slide(report, "Observations/ActivePassive.pptx", active_passive, 0.2, 2.5)
+
+    report.save(OUT_PPTX)
+    st.session_state.report_ready = True
+    st.success("Report ready ↓ Download below")
+
+
+# =========================================================
+# DOWNLOAD
+# =========================================================
+if st.session_state.report_ready:
+    with open(OUT_PPTX, "rb") as f:
+        st.download_button(
+            label="⬇ Download Portfolio Report",
+            data=f.read(),
+            file_name="Portfolio_Report.pptx",
+            mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        )
+
         
 
     
     
-    if not CLOUD_MODE and st.session_state.run_report and not st.session_state.report_ready:
-
-        report = Presentation()
-
-        paste_df_to_slide(report, "Observations/TaxCostRatio.pptx", tax_cost_ratio, 0.2, 2.6)
-        paste_df_to_slide(report, "Observations/ExpenseRatio.pptx", high_expense_ratio, 0.2, 2.5)
-        paste_df_to_slide(report, "Observations/ActivePassive.pptx", active_passive, 0.2, 2.5)
-
-        report.save("test_report.pptx")
-        st.session_state.report_ready = True
-
 
 
 
