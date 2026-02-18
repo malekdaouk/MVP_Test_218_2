@@ -1101,6 +1101,16 @@ if st.session_state.report_ready:
         )
 
 
+if st.session_state.report_ready:
+    with open("test_report.pptx", "rb") as f:
+        st.download_button(
+            label="⬇ Download Portfolio Report",
+            data=f.read(),
+            file_name="Portfolio_Report.pptx",
+            mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        )
+
+
 
 # In[ ]:
 
