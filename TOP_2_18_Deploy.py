@@ -37,6 +37,10 @@ pd.set_option("display.max_colwidth", None)
 if "run_report" not in st.session_state:
     st.session_state.run_report = False
 
+if "report_ready" not in st.session_state:
+    st.session_state.report_ready = False
+
+
 if st.button("Generate Report"):
     st.session_state.run_report = True
 
@@ -1086,6 +1090,18 @@ for df in dfs:
         df["Category"] = df["Category"].apply(lambda x: map_text(x, 22))  # Shorten category_name if present
 
 
+
+if st.session_state.report_ready:
+    with open("test_report.pptx", "rb") as f:
+        st.download_button(
+            label="Download Report",
+            data=f,
+            file_name="Portfolio_Report.pptx",
+            mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        )
+
+
+
 # In[ ]:
 
 
@@ -1221,7 +1237,7 @@ if not CLOUD_MODE:
 
     
     
-    if not CLOUD_MODE and st.session_state.run_report:
+    if not CLOUD_MODE and st.session_state.run_report and not st.session_state.report_ready:
 
         report = Presentation()
 
@@ -1230,7 +1246,8 @@ if not CLOUD_MODE:
         paste_df_to_slide(report, "Observations/ActivePassive.pptx", active_passive, 0.2, 2.5)
 
         report.save("test_report.pptx")
-        print("TEST REPORT CREATED")
+        st.session_state.report_ready = True
+
 
 
 
